@@ -1,0 +1,6 @@
+.root_card {
+  cursor: pointer;
+}
+.root_card:hover {
+border: 1px solid lightblue;
+}
