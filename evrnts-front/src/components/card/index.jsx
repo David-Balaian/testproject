@@ -7,9 +7,18 @@ import Icon from "../Icons";
 
 import "./styles.css";
 import { useNavigate } from "react-router-dom";
+import { createNewEvent, deleteEvent } from "../../GraphQL/events";
+import { modalSlice } from "../../store/modal/slice";
+import { useDispatch } from "react-redux";
 
 const MUCard = ({ item }) => {
+  const dispatch = useDispatch()
   const navigate = useNavigate();
+
+  const handleDelete = () => {
+    deleteEvent({...item})
+  }
+
   return (
     <Card
       sx={{
@@ -19,7 +28,7 @@ const MUCard = ({ item }) => {
       className="root_card"
     >
       <CardHeader
-        title={item?.title}
+        title={item?.eventName}
         subheader={item?.date || "22/05/1996"}
         action={
           <Box
@@ -31,13 +40,13 @@ const MUCard = ({ item }) => {
               aria-label="settings"
               onClick={(e) => {
                 e.preventDefault();
-                navigate(`/event/edit/${item.id}`, { replace: true });
+                dispatch(modalSlice.actions.setModal({open: true, item}))
               }}
             >
               <Icon name={"EditIcon"} />
             </IconButton>
 
-            <IconButton aria-label="settings">
+            <IconButton onClick={handleDelete} aria-label="settings">
               <Icon name={"DeleteIcon"} color={"red"} />
             </IconButton>
           </Box>
@@ -59,7 +68,7 @@ const MUCard = ({ item }) => {
             whiteSpace: "nowrap",
           }}
         >
-          {item?.body ||
+          {item?.eventDescription ||
             ` Lizards are a widespread group of squamate reptiles, with over 6,000
           species, ranging across all continents except Antarctica`}
         </Typography>
@@ -74,7 +83,7 @@ const MUCard = ({ item }) => {
             whiteSpace: "nowrap",
           }}
         >
-          comments (0)
+          comments ({item?.comments?.length || 0})
         </Typography>
       </CardContent>
     </Card>

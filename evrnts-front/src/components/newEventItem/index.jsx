@@ -15,7 +15,6 @@ const NewEventItem = ({
   changeData,
   handleSubmit,
 }) => {
-  const [, setEventTitle] = useState("");
 
   return (
     <Card
@@ -34,7 +33,6 @@ const NewEventItem = ({
           noValidate
           sx={{
             mt: 1,
-            marginTop: 8,
           }}
         >
           <Box>
@@ -48,7 +46,6 @@ const NewEventItem = ({
               id="title"
               value={eventTitle}
               onChange={(e) => {
-                setEventTitle(e.target.value);
                 changeData(e.target.value, "title");
               }}
             />

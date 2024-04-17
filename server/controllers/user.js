@@ -3,16 +3,16 @@ import {
   SignUp,
   UserLogin,
   validateAccessToken,
-} from "../../cognito/cognito";
+} from "../cognito/cognito.js";
 
 export async function addUserInCognito(req, res) {
   try {
-    const { email, first_name, last_name, designation } = req.body;
+    const { email, firstName, lastName, password } = req.body;
     const payload = {
       email: email,
-      firstName: first_name,
-      lastName: last_name,
-      designation: designation,
+      firstName: firstName,
+      lastName: lastName,
+      password: password,
     };
     const result = await SignUp(payload);
     res.status(200).json({
@@ -20,7 +20,7 @@ export async function addUserInCognito(req, res) {
       message: "User added in cognito",
     });
   } catch (error) {
-    console.log(error);
+    console.log(error.message);
     res.status(500).json({
       message: error.message,
     });

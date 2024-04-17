@@ -1,0 +1,133 @@
+﻿schema {
+  query: Query
+  mutation: Mutation
+  subscription: Subscription
+}
+
+type Mutation {
+  createEvents(input: CreateEventsInput!): events
+  deleteEvents(input: DeleteEventsInput!): events
+  updateEvents(input: UpdateEventsInput!): events
+}
+
+type Query {
+  getEvents(date: AWSDateTime!, id: ID!): events
+  listEvents(filter: TableEventsFilterInput, limit: Int, nextToken: String): eventsConnection
+  queryEventsByIdEventDescriptionIndex(after: String, first: Int, id: ID!): eventsConnection
+}
+
+type Subscription {
+  onCreateEvents(comments: [String], date: AWSDateTime, eventDescription: String, eventName: String, id: ID): events @aws_subscribe(mutations : ["createEvents"])
+  onDeleteEvents(comments: [String], date: AWSDateTime, eventDescription: String, eventName: String, id: ID): events @aws_subscribe(mutations : ["deleteEvents"])
+  onUpdateEvents(comments: [String], date: AWSDateTime, eventDescription: String, eventName: String, id: ID): events @aws_subscribe(mutations : ["updateEvents"])
+}
+
+type events {
+  comments: [String]
+  date: AWSDateTime!
+  eventDescription: String
+  eventName: String!
+  id: ID!
+}
+
+type eventsConnection {
+  items: [events]
+  nextToken: String
+}
+
+input CreateEventsInput {
+  comments: [String]
+  date: AWSDateTime!
+  eventDescription: String
+  eventName: String!
+  id: ID!
+}
+
+input DeleteEventsInput {
+  date: AWSDateTime!
+  id: ID!
+}
+
+input ModelSizeInput {
+  between: [Int]
+  eq: Int
+  ge: Int
+  gt: Int
+  le: Int
+  lt: Int
+  ne: Int
+}
+
+input TableBooleanFilterInput {
+  attributeExists: Boolean
+  eq: Boolean
+  ne: Boolean
+}
+
+input TableEventsFilterInput {
+  comments: TableStringFilterInput
+  date: TableStringFilterInput
+  eventDescription: TableStringFilterInput
+  eventName: TableStringFilterInput
+  id: TableIDFilterInput
+}
+
+input TableFloatFilterInput {
+  attributeExists: Boolean
+  between: [Float]
+  eq: Float
+  ge: Float
+  gt: Float
+  le: Float
+  lt: Float
+  ne: Float
+}
+
+input TableIDFilterInput {
+  attributeExists: Boolean
+  beginsWith: ID
+  between: [ID]
+  contains: ID
+  eq: ID
+  ge: ID
+  gt: ID
+  le: ID
+  lt: ID
+  ne: ID
+  notContains: ID
+  size: ModelSizeInput
+}
+
+input TableIntFilterInput {
+  attributeExists: Boolean
+  between: [Int]
+  eq: Int
+  ge: Int
+  gt: Int
+  le: Int
+  lt: Int
+  ne: Int
+}
+
+input TableStringFilterInput {
+  attributeExists: Boolean
+  beginsWith: String
+  between: [String]
+  contains: String
+  eq: String
+  ge: String
+  gt: String
+  le: String
+  lt: String
+  ne: String
+  notContains: String
+  size: ModelSizeInput
+}
+
+input UpdateEventsInput {
+  comments: [String]
+  date: AWSDateTime!
+  eventDescription: String
+  eventName: String
+  id: ID!
+}

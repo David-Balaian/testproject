@@ -1,22 +1,26 @@
 import React from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import { TH_signin } from "../store/user/thunk";
+import { useDispatch, useSelector } from "react-redux";
+import { getUserLoading } from "../store/user/selectors";
+
 
 export default function SignIn() {
-  const handleSubmit = (event) => {
+  const dispatch = useDispatch()
+  const loading = useSelector(getUserLoading)
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
+    dispatch(TH_signin({
+      username: data.get("email"),
       password: data.get("password"),
-    });
+    }));
   };
 
   return (
@@ -59,6 +63,7 @@ export default function SignIn() {
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
+            disabled={loading}
           >
             Sign In
           </Button>

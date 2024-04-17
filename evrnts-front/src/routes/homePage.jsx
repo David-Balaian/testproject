@@ -3,9 +3,14 @@ import { useGetData } from "../hooks/useGetData";
 
 import MUCard from "../components/card";
 import { Box } from "@mui/material";
+import { getAllEvents } from "../GraphQL/events";
+import MUModal from "../components/modal";
+import { useSelector } from "react-redux";
+import { getModal } from "../store/modal/selectors";
 
 const Home = () => {
-  const { fetchData, data: events, loading } = useGetData("posts");
+  const { fetchData, data: events, loading } = useGetData(getAllEvents);
+  const modalData = useSelector(getModal)
   useEffect(() => {
     fetchData();
   }, []);
@@ -25,7 +30,7 @@ const Home = () => {
             alignItems: "center",
           }}
         >
-          {events?.posts?.map((item) => {
+          {events?.map((item) => {
             return (
               <Box key={item.id}>
                 <MUCard item={item} />
@@ -34,6 +39,7 @@ const Home = () => {
           })}
         </Box>
       </Box>
+      <MUModal {...modalData} />
     </>
   );
 };

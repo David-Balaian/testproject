@@ -2,17 +2,19 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useGetData } from "../hooks/useGetData";
 import NewEventItem from "../components/newEventItem";
+import { getEvent } from "../GraphQL/events";
 
 const EditEvent = () => {
   let { eventId } = useParams();
-  const { fetchData, data, loading } = useGetData(`posts/${eventId}`);
+  const { fetchData, data, loading } = useGetData(()=>getEvent(eventId));
   const [event, setEvent] = useState({ date: "", description: "", title: "" });
   useEffect(() => {
     fetchData();
   }, []);
 
   useEffect(() => {
-    setEvent({ ...data, description: data?.body });
+    // setEvent(data);
+    console.log(data)
   }, [data]);
 
   if (loading || !data) {
@@ -25,7 +27,6 @@ const EditEvent = () => {
     );
   };
 
-  console.log("dataaaaaaaaaaaaaaa", data);
   const changeData = (value, key) => {
     setEvent((item) => {
       return { ...item, [key]: value };

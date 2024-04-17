@@ -1,4 +1,5 @@
-import AWS from "../config/aws-sdk";
+import AWS from "../config/aws-sdk.js";
+import { createHmac } from 'crypto';
 import * as dotenv from "dotenv";
 import axios from "axios";
 import JWT from "jsonwebtoken";
@@ -6,8 +7,8 @@ import jwkToPem from "jwk-to-pem";
 dotenv.config();
 
 const poolData = {
-  UserPoolId: "us-east-1_Y8bQaCXJ3",
-  ClientId: "3hm0dse85akc37ch7496lr20r5",
+  UserPoolId: "us-east-1_268fCspYp",
+  ClientId: "53stlmrp50pgd3qt8ddlnus3vv",
   PoolRegion: "us-east-1",
 };
 
@@ -16,21 +17,21 @@ const cognito = new AWS.CognitoIdentityServiceProvider({
 });
 
 export function SignUp(body) {
-  const { email, firstName, lastName, designation } = body;
+  const { email, firstName, lastName, password } = body;
+  console.log(body);
   return new Promise((resolve, reject) => {
-    cognito.adminCreateUser(
+    cognito.signUp(
       {
-        UserPoolId: poolData.UserPoolId,
+        ClientId: poolData.ClientId,
+        Password: password,
         Username: email,
-        DesiredDeliveryMediums: ["EMAIL"],
-        //MessageAction: 'SUPPRESS', //stop sending the invitation
+        // SECRET_HASH: secretHash,
+        // UserPoolId: poolData.UserPoolId,
+        // DesiredDeliveryMediums: ["EMAIL"],
+        // MessageAction: 'SUPPRESS', //stop sending the invitation
         //MessageAction: 'RESET',  // resend the invitation message to a user that already exists
         // TemporaryPassword: "temp#1234", // If you don't specify a value, Amazon Cognito generates one for you.
         UserAttributes: [
-          {
-            Name: "email",
-            Value: email,
-          },
           {
             Name: "given_name",
             Value: firstName,
@@ -38,17 +39,12 @@ export function SignUp(body) {
           {
             Name: "family_name",
             Value: lastName,
-          },
-          {
-            Name: "custom:designation",
-            Value: designation,
-          },
+          }
         ],
       },
       function (err, response) {
         if (err) {
           // console.log('line 47',err);
-
           reject(err);
         } else {
           resolve(response.User);
@@ -99,14 +95,19 @@ export function addUserIntoGroup(payload) {
 export function UserLogin(payload) {
   const { email, password } = payload;
   return new Promise((resolve, reject) => {
+    const hasher = createHmac('sha256', "712la1qka7u7jmcob3g9k6cqj83c5vj9k55amgrmdnr174aksnb");
+    hasher.update(`${email}${poolData.ClientId}`);
+    const secretHash = hasher.digest('base64');
+
     cognito.adminInitiateAuth(
       {
-        AuthFlow: "ADMIN_NO_SRP_AUTH",
+        AuthFlow: "ADMIN_USER_PASSWORD_AUTH",
         ClientId: poolData.ClientId,
         UserPoolId: poolData.UserPoolId,
         AuthParameters: {
           USERNAME: email,
           PASSWORD: password,
+          SECRET_HASH: secretHash,
         },
       },
       function (err, response) {

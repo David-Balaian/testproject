@@ -4,17 +4,27 @@ import TextField from "@mui/material/TextField";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+import { signUp } from 'aws-amplify/auth'
 
 export default function SignUp() {
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
+ 
     const data = new FormData(event.currentTarget);
-    console.log({
-      firstName: data.get("firstName"),
-      lastName: data.get("lastName"),
-      email: data.get("email"),
+    
+    const { isSignUpComplete, userId, nextStep } = await signUp({
+      username: data.get("email"),
       password: data.get("password"),
+      options: {
+        userAttributes: {
+          given_name: data.get("firstName"),
+          family_name: data.get("lastName")
+        },
+        autoSignIn: true
+      }
     });
+    console.log({isSignUpComplete, userId, nextStep});
+
   };
 
   return (
