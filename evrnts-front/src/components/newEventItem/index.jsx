@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Box,
   Button,
@@ -7,6 +7,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import "./stiles.css";
 
 const NewEventItem = ({
   eventTitle,
@@ -15,7 +16,6 @@ const NewEventItem = ({
   changeData,
   handleSubmit,
 }) => {
-
   return (
     <Card
       className="root_card"
@@ -46,30 +46,33 @@ const NewEventItem = ({
               id="title"
               value={eventTitle}
               onChange={(e) => {
-                changeData(e.target.value, "title");
+                changeData(e.target.value, "eventName");
               }}
+              placeholder="title"
+              size="small"
             />
           </Box>
           <Box>
             <Typography variant="h6"> Event Description </Typography>
             <textarea
-              id="w3review"
+              className="text-area"
               name="description"
               rows="6"
               cols="61"
               value={eventDescription}
               onChange={(e) => {
-                changeData(e.target.value, "description");
+                changeData(e.target.value, "eventDescription");
               }}
             />
           </Box>
           <Box>
             <Typography variant="h6"> Event Date </Typography>
             <input
+              className="date-input"
               type="date"
               value={eventDate}
               onChange={(e) => {
-                changeData(e.target.value, "date");
+                changeData(e.target.value, "eventDate");
               }}
             />
           </Box>

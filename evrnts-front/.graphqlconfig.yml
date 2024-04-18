@@ -11,10 +11,10 @@ projects:
         generatedFileName: ''
         docsFilePath: src/graphql
         region: us-east-1
-        apiId: qnsm6435x5d65k7rqykfg6poiy
+        apiId: ugf7wwjncbgb7k53op7jahas54
         frontend: javascript
         framework: react
-        maxDepth: 3
+        maxDepth: 2
 extensions:
   amplify:
     version: 3

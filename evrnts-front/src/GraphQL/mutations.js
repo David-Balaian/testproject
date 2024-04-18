@@ -4,11 +4,11 @@
 export const createEvents = /* GraphQL */ `
   mutation CreateEvents($input: CreateEventsInput!) {
     createEvents(input: $input) {
-      eventName
-      eventDescription
-      date
       id
-      comments
+      eventDescription
+      eventName
+      eventDate
+      authorEmail
       __typename
     }
   }
@@ -16,11 +16,11 @@ export const createEvents = /* GraphQL */ `
 export const updateEvents = /* GraphQL */ `
   mutation UpdateEvents($input: UpdateEventsInput!) {
     updateEvents(input: $input) {
-      eventName
-      eventDescription
-      date
       id
-      comments
+      eventDescription
+      eventName
+      eventDate
+      authorEmail
       __typename
     }
   }
@@ -28,11 +28,11 @@ export const updateEvents = /* GraphQL */ `
 export const deleteEvents = /* GraphQL */ `
   mutation DeleteEvents($input: DeleteEventsInput!) {
     deleteEvents(input: $input) {
-      eventName
-      eventDescription
-      date
       id
-      comments
+      eventDescription
+      eventName
+      eventDate
+      authorEmail
       __typename
     }
   }

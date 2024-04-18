@@ -3,72 +3,72 @@
 
 export const onCreateEvents = /* GraphQL */ `
   subscription OnCreateEvents(
-    $eventName: String
+    $id: String
     $eventDescription: String
-    $date: AWSDateTime
-    $id: ID
-    $comments: [String]
+    $eventName: String
+    $eventDate: String
+    $authorEmail: String
   ) {
     onCreateEvents(
-      eventName: $eventName
-      eventDescription: $eventDescription
-      date: $date
       id: $id
-      comments: $comments
+      eventDescription: $eventDescription
+      eventName: $eventName
+      eventDate: $eventDate
+      authorEmail: $authorEmail
     ) {
-      eventName
-      eventDescription
-      date
       id
-      comments
+      eventDescription
+      eventName
+      eventDate
+      authorEmail
       __typename
     }
   }
 `;
 export const onUpdateEvents = /* GraphQL */ `
   subscription OnUpdateEvents(
-    $eventName: String
+    $id: String
     $eventDescription: String
-    $date: AWSDateTime
-    $id: ID
-    $comments: [String]
+    $eventName: String
+    $eventDate: String
+    $authorEmail: String
   ) {
     onUpdateEvents(
-      eventName: $eventName
-      eventDescription: $eventDescription
-      date: $date
       id: $id
-      comments: $comments
+      eventDescription: $eventDescription
+      eventName: $eventName
+      eventDate: $eventDate
+      authorEmail: $authorEmail
     ) {
-      eventName
-      eventDescription
-      date
       id
-      comments
+      eventDescription
+      eventName
+      eventDate
+      authorEmail
       __typename
     }
   }
 `;
 export const onDeleteEvents = /* GraphQL */ `
   subscription OnDeleteEvents(
-    $eventName: String
+    $id: String
     $eventDescription: String
-    $date: AWSDateTime
-    $id: ID
-    $comments: [String]
+    $eventName: String
+    $eventDate: String
+    $authorEmail: String
   ) {
     onDeleteEvents(
-      eventName: $eventName
-      eventDescription: $eventDescription
-      date: $date
       id: $id
-      comments: $comments
+      eventDescription: $eventDescription
+      eventName: $eventName
+      eventDate: $eventDate
+      authorEmail: $authorEmail
     ) {
-      eventName
-      eventDescription
-      date
       id
-      comments
+      eventDescription
+      eventName
+      eventDate
+      authorEmail
       __typename
     }
   }

@@ -2,13 +2,13 @@
 // this is an auto generated file. This will be overwritten
 
 export const getEvents = /* GraphQL */ `
-  query GetEvents($id: ID!) {
+  query GetEvents($id: String!) {
     getEvents(id: $id) {
-      eventName
-      eventDescription
-      date
       id
-      comments
+      eventDescription
+      eventName
+      eventDate
+      authorEmail
       __typename
     }
   }
@@ -21,35 +21,11 @@ export const listEvents = /* GraphQL */ `
   ) {
     listEvents(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
-        eventName
-        eventDescription
-        date
         id
-        comments
-        __typename
-      }
-      nextToken
-      __typename
-    }
-  }
-`;
-export const queryEventsByIdEventDescriptionIndex = /* GraphQL */ `
-  query QueryEventsByIdEventDescriptionIndex(
-    $id: ID!
-    $first: Int
-    $after: String
-  ) {
-    queryEventsByIdEventDescriptionIndex(
-      id: $id
-      first: $first
-      after: $after
-    ) {
-      items {
-        eventName
         eventDescription
-        date
-        id
-        comments
+        eventName
+        eventDate
+        authorEmail
         __typename
       }
       nextToken

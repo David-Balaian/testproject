@@ -1,0 +1,16 @@
+.text-area:focus {
+  border: 1px solid #1670be;
+  box-shadow: 0 0 3px #1670be;
+  outline-offset: 0px;
+  outline: none;
+}
+
+.date-input {
+  border: 1px solid #bdbdbd;
+  border-radius: 4px;
+  padding: 8px;
+  font-size: 14px;
+  outline: none;
+  width: 200px;
+  cursor: pointer;
+}
