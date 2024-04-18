@@ -76,11 +76,6 @@ export const getAllEvents = async () => {
     const response = await client.graphql({
       query: listEvents,
     });
-    console.log(
-      "%cevrnts-frontsrcGraphQLevents.js:80 response",
-      "color: #ff9900",
-      response
-    );
     return response.data.listEvents.items;
   } catch (error) {
     console.error("Error -----------:", error);

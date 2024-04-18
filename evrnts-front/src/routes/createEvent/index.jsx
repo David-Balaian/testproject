@@ -4,6 +4,7 @@ import { createNewEvent } from "../../GraphQL/events";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { getActiveUser } from "../../store/user/selectors";
+import Notification from "../../components/notificationAlert";
 
 const CreateEvent = () => {
   const navigate = useNavigate();
@@ -15,10 +16,26 @@ const CreateEvent = () => {
     eventName: "",
   });
 
+  const [notificationData, setNotificationData] = useState({
+    type: "",
+    message: "",
+  });
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await createNewEvent({ ...data, authorEmail: userData.email });
-    navigate("/");
+    try {
+      await createNewEvent({ ...data, authorEmail: userData.email });
+      setNotificationData({
+        type: "success",
+        message: "event added successfully",
+      });
+    } catch (err) {
+      setNotificationData({ type: "error", message: err.message });
+    } finally {
+      setTimeout(() => {
+        navigate("/");
+      }, 1000);
+    }
   };
 
   const changeData = (value, key) => {
@@ -28,7 +45,8 @@ const CreateEvent = () => {
   };
 
   return (
-    <div>
+    <div style={{ marginTop: 24 }}>
+      {<Notification alert={notificationData} />}
       <NewEventItem
         eventDate={data.eventDate}
         eventDescription={data.eventDescription}

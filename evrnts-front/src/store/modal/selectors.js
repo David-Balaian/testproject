@@ -1,1 +1,1 @@
-export const getModal = store => store.modal.modalData
+export const getModal = (store) => store.modal.modalData;

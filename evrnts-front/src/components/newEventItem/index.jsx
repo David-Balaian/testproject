@@ -15,6 +15,7 @@ const NewEventItem = ({
   eventDate,
   changeData,
   handleSubmit,
+  isDisabled = false,
 }) => {
   return (
     <Card
@@ -24,6 +25,7 @@ const NewEventItem = ({
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
+        margin: "0 auto",
       }}
     >
       <CardContent>
@@ -71,6 +73,7 @@ const NewEventItem = ({
               className="date-input"
               type="date"
               value={eventDate}
+              min={new Date().toISOString().split("T")[0]}
               onChange={(e) => {
                 changeData(e.target.value, "eventDate");
               }}
@@ -81,8 +84,9 @@ const NewEventItem = ({
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
+            disabled={isDisabled}
           >
-            create event
+            Save
           </Button>
         </Box>
       </CardContent>

@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import MUCard from "../../components/card";
 import { useGetData } from "../../hooks/useGetData";
 import { getEvent } from "../../GraphQL/events";
+import LoadingSpinner from "../../components/loading";
+import NoData from "../../components/NoData";
 
 const EventView = () => {
   const { eventId } = useParams();
@@ -12,16 +14,10 @@ const EventView = () => {
     fetchData();
   }, []);
 
-  console.log(
-    "%cevrnts-frontsrc\routesEventView.jsx:10 rout",
-    "color: #26bfa5;",
-    eventId
-  );
-
   if (loading) {
-    return <div> loading ... </div>;
+    return <LoadingSpinner />;
   }
-  return data ? <MUCard item={data} allView /> : <div>item chkaaa</div>;
+  return data ? <MUCard item={data} allView /> : <NoData />;
 };
 
 export default EventView;
